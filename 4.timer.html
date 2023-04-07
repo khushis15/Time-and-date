@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #a{
+            text-align: center;
+            color: rgb(38,67,72);
+        }
+        #b{
+            text-align: center;
+            color: rgb(85,107,47);
+        }
+        #dates{
+            text-align: center;
+            font-size: 50px;
+            color: white;
+            background-color: rgb(38,67,72);
+            border: 2px solid white;
+            border-radius: 2px;
+            margin-left: 250px;
+            margin-right: 250px;
+        }
+        #clock{
+            text-align: center;
+            font-size: 50px;
+            color: white;
+            background-color: rgb(85,107,47);
+            border: 2px solid white;
+            border-radius: 2px;
+            margin-left: 450px;
+            margin-right: 450px;
+        }
+        #inn{
+            text-align: center;
+            font-size: 50px;
+            color: rgb(139,0,0);
+        }
+    </style>
+</head>
+<body style="background-color: rgb(188,184,138)">
+    <audio id="audio" src="CivilProtectionAirRaidSirensTe PEHD101201.mp3" autoplay loop></audio>
+    <h1 id="a">CURRENT DATE</h1><p id="dates"></p>
+    <h1 id="b">CURRENT TIME</h1><p id="clock"></p>
+    <p id="inn"></p>
+    <script type="text/javascript">
+        // For Current Date
+        let x = new Date();
+        let day=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        let date=x.getDate();
+        let month=['January','February','March','April','May','June','July','August','September','October','November','December'];
+        let year=x.getFullYear();
+        var elem0 = document.getElementById('dates');
+        elem0.innerHTML =` ${day[x.getDay()]} | ${date} , ${month[x.getMonth()]}  ${year} `;
+
+        // For Current Time
+        let hour = x.getHours();
+        let min =x.getMinutes();
+        let sec=x.getSeconds();
+        let tz ="A.M";
+        var elem1 = document.getElementById('clock');
+        function display(){
+            elem1.innerHTML = `${hour} : ${min} : ${sec  }  ${tz} ` ;
+            sec+=1;
+            if(hour>=12){
+                tz= "P.M";
+                hour =hour-12;
+            }
+            if(sec>=60){
+                sec=1;
+                min+=1
+            }
+            if(min>60){
+                min =1
+                hour+=1
+            }
+        }
+        setInterval(display, 1000);
+
+        //For Countdown
+        var timeLeft = 30;
+        var elem2 = document.getElementById('inn');
+        var timerId = setInterval(countdown, 1000);
+        function countdown() {
+            if (timeLeft == -1) {
+                clearTimeout(timerId);
+                elem2.innerHTML="Time's Up";
+                document.querySelector('#audio').play();
+            } else {
+                elem2.innerHTML = 'CountDown : <br>'+ timeLeft ;
+                timeLeft--;
+            }
+        }
+    </script>
+</body>
+</html>
